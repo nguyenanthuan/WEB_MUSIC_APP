@@ -9,7 +9,7 @@ urlpatterns = [
     path('logout_user', views.logout_user, name = "logout_user"),
     path('watchlater', views.watchlater, name = "watchlater"),
     path('history', views.history, name = "history"),
-    path('upload', views.upload, name = "upload")
+    # path('upload', views.upload, name = "upload")
 
 
 ] 

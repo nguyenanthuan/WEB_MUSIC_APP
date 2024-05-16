@@ -1,44 +1,52 @@
 {% extends 'mtunes/basic.htm' %}
-{% block title%}All Songs  {%endblock%}
+{% block title %}All Songs{% endblock %}
 
-{%block body%}
+{% block body %}
 
-{% if message%}
+{% if message %}
 <script>
     Swal.fire({
         position: 'top-end',
         icon: 'success',
-        title: '{{message}}',
+        title: '{{ message }}',
         showConfirmButton: false,
         timer: 1500
-      })
-    </script>
+    })
+</script>
 {% endif %}
 <div class="container">
     <div class="row">
-        <div class="col-md-6" style = "padding-top: 3%; padding-left: 10%; padding-top: 15%;">
-            <img src="/media/{{song.image}}" alt="" height="300px">
+        <div class="col-md-6">
+            <img src="/media/{{ song.image }}" alt="" class="img-fluid">
         </div>
-        <div class="col-md-6" style = "padding-top: 15%;">
-            <h2 style="padding-top: 6%; font-weight: 550; ">Title: {{song.name}}</h2>
-            <h5 style="padding-top: 2%; font-weight: 550;">Category: {{song.tags}}</h5>
-            <h5 style="padding-top: 2%; font-weight: 550;">Movie: {{song.movie}}</h5>
-            <h5 style="padding-top: 2%; font-weight: 550;">Singer: {{song.singer}}</h5>
-            <audio controls >
-                <source src="/media/{{song.song}}" type="audio/mp3">
+        <div class="col-md-6">
+            <h2 class="mt-4">{{ song.name }}</h2>
+            <h5 class="mt-2">Category: {{ song.tags }}</h5>
+            <h5>Movie: {{ song.movie }}</h5>
+            <h5>Singer: {{ song.singer }}</h5>
+            <audio controls class="mt-4">
+                <source src="/media/{{ song.song }}" type="audio/mp3">
+                Your browser does not support the audio element.
             </audio>
-            <div style="padding-top: 2%;">
-
-
-            <div class="row">
-            <form action="/mtunes/watchlater" method="POST">{% csrf_token %}
-            <input type="hidden" name="video_id" value="{{song.song_id}}">
-            <button type="submit" class="btn btn-outline-danger">Add to WatchLater</button>
-            </form>
-            <a href="/media/{{song.song}}" download><button class="btn btn-outline-danger">Download Song</button></a>
+            <div class="mt-4">
+                <div class="row">
+                    <form action="/mtunes/watchlater" method="POST" class="mr-2">{% csrf_token %}
+                        <input type="hidden" name="video_id" value="{{ song.song_id }}">
+                        <button type="submit" class="btn btn-outline-danger">Add to Listen Later</button>
+                    </form>
+                    <a href="/media/{{ song.song }}" download class="btn btn-outline-danger">Download Song</a>
+                </div>
             </div>
         </div>
-    
     </div>
 </div>
-{%endblock%}
+
+<!-- Music Player Section -->
+<div class="fixed-bottom bg-dark p-3">
+    <audio controls style="width: 100%;" class="text-white">
+        <source src="/media/{{ song.song }}" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+</div>
+
+{% endblock %}
