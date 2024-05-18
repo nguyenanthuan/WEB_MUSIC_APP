@@ -1,32 +1,23 @@
 # Django-Music-Web-App
 This is a Django based Music web application. Django administration database administers the database. It has features like, Add to Watch Later, Download song and History.
 
-## Signup Page
-<img height = "500" src = "/img/signup.png">
+python3 -m venv venv
+virtualenv venv
 
-## Login Page
-<img height = "500" src = "/img/login.png">
+source venv/bin/activate
 
-## Home Page
-<img height = "500" src = "/img/homepage.png">
-<img height = "500" src = "/img/homepage2.png">
+pip install django
 
-## All songs page
-<img height = "500" src = "/img/allsongs.png">
-<img height = "500" src = "/img/song.png">
 
-## History of listened songs page
-<img height = "500" src = "/img/history.png">
+python manage.py makemigrations
+python manage.py migrate
 
-## Added to Watch Later page
-<img height = "500" src = "/img/watchlater.png">
+It's a spotify like web-application where users can listen, upload and delete songs.
+It is built using HTML, bootstrap and Python-Django framework.
 
-## Django Admin Sign in 
-<img height = "500" src = "/img/django-admin.png">
+To run the project: 
+open the file in a code editor (VS Code or pychram recommended)
+run the commend "python manage.py runserver" in the terminal
+follow the localhost port provided by the server (ex: http://127.0.0.1:8000/)
 
-## Django Admin Home Page
-<img height = "500" src = "/img/admin-homepage.png">
-
-## Django Admin Dataset of total songs
-<img height = "500" src = "/img/totalsongs.png">
 
