@@ -2,10 +2,12 @@
 This is a Django based Music web application. Django administration database administers the database. It has features like, Add to Watch Later, Download song and History.
 
 python3 -m venv venv
+
 virtualenv venv
 
 source venv/bin/activate
 
+pip install r requirements.txt
 pip install django
 
 
