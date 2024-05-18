@@ -2,7 +2,6 @@
 {% block title %}All Songs{% endblock %}
 
 {% block body %}
-
 {% if message %}
 <script>
     Swal.fire({
@@ -11,42 +10,72 @@
         title: '{{ message }}',
         showConfirmButton: false,
         timer: 1500
-    })
+    });
 </script>
 {% endif %}
 <div class="container">
-    <div class="row">
-        <div class="col-md-6">
-            <img src="/media/{{ song.image }}" alt="" class="img-fluid">
+    <div class="row align-items-center" style="min-height: 80vh;">
+        <div class="col-md-6 text-center">
+            <img src="/media/{{ song.image }}" alt="{{ song.name }}" class="img-fluid rounded shadow-sm" style="max-height: 300px;">
         </div>
         <div class="col-md-6">
-            <h2 class="mt-4">{{ song.name }}</h2>
-            <h5 class="mt-2">Category: {{ song.tags }}</h5>
-            <h5>Movie: {{ song.movie }}</h5>
-            <h5>Singer: {{ song.singer }}</h5>
-            <audio controls class="mt-4">
-                <source src="/media/{{ song.song }}" type="audio/mp3">
-                Your browser does not support the audio element.
-            </audio>
-            <div class="mt-4">
-                <div class="row">
-                    <form action="/mtunes/watchlater" method="POST" class="mr-2">{% csrf_token %}
-                        <input type="hidden" name="video_id" value="{{ song.song_id }}">
-                        <button type="submit" class="btn btn-outline-danger">Add to Listen Later</button>
-                    </form>
-                    <a href="/media/{{ song.song }}" download class="btn btn-outline-danger">Download Song</a>
-                </div>
+            <h2 class="font-weight-bold mt-3">{{ song.name }}</h2>
+            <h5 class="font-weight-bold mt-2">Category: <span class="font-weight-normal">{{ song.tags }}</span></h5>
+            <h5 class="font-weight-bold mt-2">Movie: <span class="font-weight-normal">{{ song.movie }}</span></h5>
+            <h5 class="font-weight-bold mt-2">Singer: <span class="font-weight-normal">{{ song.singer }}</span></h5>
+            <div class="mt-3">
+                <form action="/mtunes/watchlater" method="POST" class="d-inline-block mr-2">{% csrf_token %}
+                    <input type="hidden" name="video_id" value="{{ song.song_id }}">
+                    <button type="submit" class="btn btn-custom">Add to Watch Later</button>
+                </form>
+                <a href="/media/{{ song.song }}" download class="btn btn-custom">Download Song</a>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Music Player Section -->
-<div class="fixed-bottom bg-dark p-3">
-    <audio controls style="width: 100%;" class="text-white">
-        <source src="/media/{{ song.song }}" type="audio/mp3">
-        Your browser does not support the audio element.
-    </audio>
-</div>
+<!-- Footer with Audio Player -->
+<footer class="footer fixed-bottom bg-dark text-white py-2">
+    <div class="container">
+        <div class="row">
+            <div class="col text-center">
+                <audio controls class="w-100">
+                    <source src="/media/{{ song.song }}" type="audio/mp3">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+</footer>
 
+<style>
+    .btn-custom {
+        background-color: #1DB954;
+        border: none;
+        color: white;
+        padding: 0.5em 1.5em;
+        border-radius: 20px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-custom:hover {
+        background-color: #1ED760;
+        color: white;
+    }
+
+    .font-weight-bold {
+        font-weight: bold;
+    }
+
+    .font-weight-normal {
+        font-weight: normal;
+    }
+
+    .footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        z-index: 1030;
+    }
+</style>
 {% endblock %}

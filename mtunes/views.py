@@ -1,3 +1,4 @@
+from ssl import CHANNEL_BINDING_TYPES
 from django.shortcuts import render
 from mtunes.models import Song, Watchlater, History
 from django.contrib.auth.models import User
@@ -70,10 +71,10 @@ def login(request):
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(username=username, password=password)
-        from django.contrib.auth import login
-        login(request, user)   
-        redirect("/")
-
+        if user :
+            from django.contrib.auth import login
+            login(request, user)   
+        redirect('//')
     return render(request, 'mtunes/login.htm')
 
 def signup(request):
@@ -100,3 +101,25 @@ def signup(request):
 def logout_user(request):
     logout(request)
     return redirect("/")
+
+def upload(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        singer = request.POST['singer']
+        tag = request.POST['tag']
+        image = request.POST['image']
+        movie = request.POST['movie']
+        credit = request.POST['credit']
+        song1 = request.FILES['file']
+
+        song_model = Song(name=name, singer=singer, tags=tag, image=image, movie=movie, credit=credit, song=song1)
+        song_model.save()
+        music_id = song_model.song_id
+        channel_find = CHANNEL_BINDING_TYPES.objects.filter(name=str(request.user))
+        print(channel_find)
+
+        for i in channel_find:
+            i.music += f" {music_id}"
+            i.save()
+
+    return render(request, "mtunes/upload.htm")
